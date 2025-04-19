@@ -21,4 +21,76 @@
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width
+            width: 300px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            width: 80%;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        p {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .message {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff6347;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Jogo de Adivinhação</h1>
+        <p>Adivinhe um número entre 1 e 100</p>
+        <input type="number" id="guess" placeholder="Digite seu palpite">
+        <button onclick="checkGuess()">Tentar</button>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        // Gerando um número secreto aleatório entre 1 e 100
+        let numeroSecreto = Math.floor(Math.random() * 100) + 1;
+        let tentativas = 0;
+
+        function checkGuess() {
+            const palpite = parseInt(document.getElementById("guess").value);
+            tentativas++;
+
+            if (isNaN(palpite) || palpite < 1 || palpite > 100) {
+                document.getElementById("message").innerHTML = "Por favor, insira um número entre 1 e 100.";
+                return;
+            }
+
+            if (palpite < numeroSecreto) {
+                document.getElementById("message").innerHTML = `O número secreto é maior! Tentativa: ${tentativas}`;
+            } else if (palpite > numeroSecreto) {
+                document.getElementById("message").innerHTML = `O número secreto é menor! Tentativa: ${tentativas}`;
+            } else {
+                document.getElementById("message").
