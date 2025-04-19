@@ -2,67 +2,18 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Verificador de Vazamentos</title>
   <style>
     body {
-      font-family: Arial;
-      background-color: #111;
-      color: #0f0;
-      text-align: center;
-      padding-top: 100px;
+      background-color: #121212;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
     }
-    input, button {
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-    button {
-      background-color: #0f0;
-      color: #111;
-      font-weight: bold;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <h1>Verifique se seus dados vazaram</h1>
-  <input type="email" id="email" placeholder="Digite seu e-mail">
-  <br>
-  <button onclick="verificar()">Verificar</button>
-  <p id="resultado"></p>
-
-  <script>
-    async function verificar() {
-      const email = document.getElementById("email").value;
-      const resultado = document.getElementById("resultado");
-
-      if (!email) {
-        resultado.innerText = "Digite um e-mail válido!";
-        return;
-      }
-
-      resultado.innerText = "Verificando...";
-
-      try {
-        const res = await fetch(`https://haveibeenpwned.com/api/v3/breachedaccount/${email}`, {
-          headers: {
-            "hibp-api-key": "SUA_API_KEY_AQUI"
-          }
-        });
-
-        if (res.status === 404) {
-          resultado.innerText = "Boa! Nenhum vazamento encontrado.";
-        } else if (res.status === 200) {
-          const data = await res.json();
-          resultado.innerText = `Ops! Encontrado em ${data.length} vazamentos.`;
-        } else {
-          resultado.innerText = "Erro ao consultar. Tenta de novo.";
-        }
-      } catch (err) {
-        resultado.innerText = "Erro de conexão.";
-      }
-    }
-  </script>
-</body>
-</html>
+    h1
