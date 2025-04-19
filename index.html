@@ -1,51 +1,35 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogo de Adivinhação</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f8ff;
-            margin: 0;
-        }
+const express = require('express');
+const app = express();
+const port = 3000;
 
-        .container {
-            text-align: center;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 300px;
-        }
+// Permitir o envio de JSON e servir arquivos estáticos
+app.use(express.static('public'));
+app.use(express.json());
 
-        input {
-            padding: 10px;
-            font-size: 16px;
-            width: 100px;
-            margin-top: 10px;
-        }
+// Rota para gerar um número aleatório entre 1 e 100
+let numeroSecreto = Math.floor(Math.random() * 100) + 1;
+let tentativas = 0;
 
-        button {
-            padding: 10px 15px;
-            font-size: 16px;
-            margin-top: 20px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+// Endpoint para fazer a tentativa
+app.post('/adivinhar', (req, res) => {
+    const palpite = req.body.palpite;
+    tentativas++;
 
-        button:hover {
-            background-color: #218838;
-        }
+    let resposta = '';
+    if (palpite < numeroSecreto) {
+        resposta = 'O número é maior!';
+    } else if (palpite > numeroSecreto) {
+        resposta = 'O número é menor!';
+    } else {
+        resposta = `Parabéns! Você acertou em ${tentativas} tentativas!`;
+        // Resetando o jogo
+        numeroSecreto = Math.floor(Math.random() * 100) + 1;
+        tentativas = 0;
+    }
 
-        p {
-            font-size: 18px;
-            color: #333;
+    res.json({ resposta, tentativas });
+});
+
+app.listen(port, () => {
+    console.log(`Servidor rodando em http://localhost:${port}`);
+});
